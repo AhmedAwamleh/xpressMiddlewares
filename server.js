@@ -8,7 +8,9 @@ app.use(cors());
 app.use(express.json());
 
 
-app.use(validateNum)
+app.get('/', (req, res) => {
+    res.status(200).send('hello from midlewear')
+})
 
 
 app.get('/valid', validateNum, (req, res) => {
@@ -26,6 +28,7 @@ function start(port) {
         console.log(`work on ${port}`)
     })
 }
+
 
 app.use(errorHandler)
 module.exports = {
