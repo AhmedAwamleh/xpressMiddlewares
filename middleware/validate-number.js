@@ -1,11 +1,14 @@
-const validNum = (req, res, next) => {
-    const number = parseInt(req.query.number);
+'use strict'
+
+function validateNum(req, res, next) {
+    const number = parseInt(req.query.number)
+    console.log(typeof number)
     if (!isNaN(number)) {
-        req.squareNumber = number * number
-        next();
+        req.numbersquere = number * number
+        console.log(req.numbersquere)
+        next()
     } else {
-        console.log(typeof number)
-        next("invalid Number")
+        next(`this is not a number ${number}`)
     }
 }
-module.exports = { validNum }
+module.exports = validateNum
