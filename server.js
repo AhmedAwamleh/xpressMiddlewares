@@ -1,31 +1,36 @@
-require('dotenv').config()
+'use strict '
 const express = require('express')
-app = express();
+const app = express();
 const cors = require('cors')
-app.use(cors())
+const validateNum = require('./middleware/validate-number')
+const errorHandler = require('./middleware/500')
+app.use(cors());
+app.use(express.json());
 
-const PORT = process.env.PORT
-const { validNum } = require(`./middleware/validate-number`)
-const { errorHandler } = require('./error-handlers/500')
-
-app.use(express.json())
-
-app.get('/', (req, res) => {
-    res.status(200).send('hello world')
-})
+app.use(validateNum)
 
 
-app.get('/square', validNum, (req, res) => {
+
+app.get('/', (req, res) => res.status(200).send('hello from midlewear'))
+
+app.get('/valid', validateNum, (req, res) => {
+    // res.status(200).send(`this is the ${req.numbersquere}`);
+    res.status(200).json({
+        number: req.query.number,
+        squereNumber: req.numbersquere
+    })
     console.log(req.query.number)
-    res.status(200).send(`square of ${req.query.number} is ${req.squareNumber}`);
-});
 
 
-app.use(errorHandler);
-app.listen(PORT, () => {
-    console.log(`server listen on ${PORT}`)
 })
+function start(port) {
+    app.listen(port, () => {
+        console.log(`work on ${port}`)
+    })
+}
 
+app.use(errorHandler)
 module.exports = {
-    app: app,
+    app,
+    start
 }
