@@ -6,13 +6,9 @@ const validateNum = require('./middleware/validate-number')
 const errorHandler = require('./middleware/500')
 app.use(cors());
 app.use(express.json());
-app.get('/', (req, res) => res.status(200).send('hello from midlewear'))
 
 
 app.use(validateNum)
-
-
-
 
 
 app.get('/valid', validateNum, (req, res) => {
